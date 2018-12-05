@@ -1,10 +1,10 @@
 # RMovie
 
 
-Pour le js et css en dev : 
+Pour compiler le js et css en dev : 
  yarn encore dev --watch
 
-Pour les fichiers minifié (En prod) : 
+Pour compiler & minifier les fichiers (En prod) : 
  yarn encore production
 
 Nous souhaitons réaliser un site proposant à la suite d’une création de compte la possibilité d’accéder 
