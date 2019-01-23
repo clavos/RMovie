@@ -5,4 +5,5 @@
 /var/
 /vendor/
 node_modules/
+symfony.lock
 ###< symfony/framework-bundle ###
