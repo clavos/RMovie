@@ -4,7 +4,6 @@
 csa_guzzle:
     profiler: '%kernel.debug%'
     clients:
-        default: ~
-#        my_client:
-#            config:
-#                base_uri: 'http://example.com'
+        imdb:
+          config:
+            base_uri: http://www.omdbapi.com
