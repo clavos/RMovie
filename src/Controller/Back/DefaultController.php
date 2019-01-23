@@ -11,7 +11,7 @@ class DefaultController extends AbstractController
     /**
      * @return Response
      *
-     * @Route(name="app_front_default_home", path="/", methods={"GET"})
+     * @Route(name="app_back_default_home", path="/", methods={"GET"})
      */
     public function home()
     {
