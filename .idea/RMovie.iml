@@ -5,6 +5,10 @@
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" packagePrefix="App\Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" packagePrefix="App\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/csa/guzzle-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/csa/guzzle-cache-middleware" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/csa/guzzle-history-middleware" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/csa/guzzle-stopwatch-middleware" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/doctrine/collections" />
@@ -112,6 +116,10 @@
       <library name="PHP" type="php">
         <CLASSES>
           <root url="file://$MODULE_DIR$/vendor/composer" />
+          <root url="file://$MODULE_DIR$/vendor/csa/guzzle-bundle" />
+          <root url="file://$MODULE_DIR$/vendor/csa/guzzle-cache-middleware" />
+          <root url="file://$MODULE_DIR$/vendor/csa/guzzle-history-middleware" />
+          <root url="file://$MODULE_DIR$/vendor/csa/guzzle-stopwatch-middleware" />
           <root url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
           <root url="file://$MODULE_DIR$/vendor/doctrine/cache" />
           <root url="file://$MODULE_DIR$/vendor/doctrine/collections" />
@@ -216,6 +224,10 @@
         <JAVADOC />
         <SOURCES>
           <root url="file://$MODULE_DIR$/vendor/composer" />
+          <root url="file://$MODULE_DIR$/vendor/csa/guzzle-bundle" />
+          <root url="file://$MODULE_DIR$/vendor/csa/guzzle-cache-middleware" />
+          <root url="file://$MODULE_DIR$/vendor/csa/guzzle-history-middleware" />
+          <root url="file://$MODULE_DIR$/vendor/csa/guzzle-stopwatch-middleware" />
           <root url="file://$MODULE_DIR$/vendor/doctrine/annotations" />
           <root url="file://$MODULE_DIR$/vendor/doctrine/cache" />
           <root url="file://$MODULE_DIR$/vendor/doctrine/collections" />
