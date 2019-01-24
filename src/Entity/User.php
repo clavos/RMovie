@@ -44,7 +44,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user", cascade={"persist"})
      */
     private $listings;
 
@@ -57,6 +57,16 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="user")
      */
     private $scores;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $token;
 
     public function __construct()
     {
@@ -243,6 +253,30 @@ class User implements UserInterface
                 $score->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): self
+    {
+        $this->token = $token;
 
         return $this;
     }
