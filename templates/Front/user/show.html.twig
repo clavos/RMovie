@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>User</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Username</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>Demande</th>
+                <td>{{ user.username }}</td>
+            </tr>
+        </tbody>
+    </table>
+    Ajouter ses listes et stats
+
+    <a href="{{ path('user') }}">back to list</a>
+{% endblock %}

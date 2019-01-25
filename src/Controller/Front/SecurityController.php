@@ -73,7 +73,8 @@ class SecurityController extends Controller
             $watch = new Listing();
             $watch->setName('Vu');
             $watch->setUser($user);
-            //$user->addListing($watch);
+            $user->addListing($to_watch);
+            $user->addListing($watch);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);

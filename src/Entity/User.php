@@ -68,11 +68,17 @@ class User implements UserInterface
      */
     private $token;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User")
+     */
+    private $friends;
+
     public function __construct()
     {
         $this->listings = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->scores = new ArrayCollection();
+        $this->friends = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -277,6 +283,32 @@ class User implements UserInterface
     public function setToken(string $token): self
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getFriends(): Collection
+    {
+        return $this->friends;
+    }
+
+    public function addFriend(User $user): self
+    {
+        if (!$this->friends->contains($user)) {
+            $this->friends[] = $user;
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->friends->contains($user)) {
+            $this->friends->removeElement($user);
+        }
 
         return $this;
     }
