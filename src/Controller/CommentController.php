@@ -16,15 +16,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommentController extends AbstractController
 {
     /**
-     * @Route("/", name="comment_index", methods="GET")
+     * @Route("/", name="comment_index", methods={"GET"})
      */
     public function index(CommentRepository $commentRepository): Response
     {
-        return $this->render('comment/index.html.twig', ['comments' => $commentRepository->findAll()]);
+        return $this->render('comment/index.html.twig', [
+            'comments' => $commentRepository->findAll(),
+        ]);
     }
 
     /**
-     * @Route("/new", name="comment_new", methods="GET|POST")
+     * @Route("/new", name="comment_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -33,9 +35,9 @@ class CommentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($comment);
-            $em->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
 
             return $this->redirectToRoute('comment_index');
         }
@@ -46,16 +48,19 @@ class CommentController extends AbstractController
         ]);
     }
 
+
     /**
-     * @Route("/{id}", name="comment_show", methods="GET")
+     * @Route("/{id}", name="comment_show", methods={"GET"})
      */
     public function show(Comment $comment): Response
     {
-        return $this->render('comment/show.html.twig', ['comment' => $comment]);
+        return $this->render('comment/show.html.twig', [
+            'comment' => $comment,
+        ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="comment_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="comment_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Comment $comment): Response
     {
@@ -65,7 +70,9 @@ class CommentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('comment_edit', ['id' => $comment->getId()]);
+            return $this->redirectToRoute('comment_index', [
+                'id' => $comment->getId(),
+            ]);
         }
 
         return $this->render('comment/edit.html.twig', [
@@ -75,14 +82,14 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="comment_delete", methods="DELETE")
+     * @Route("/{id}", name="comment_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Comment $comment): Response
     {
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($comment);
-            $em->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($comment);
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('comment_index');

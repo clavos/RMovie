@@ -9,7 +9,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
-use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerInterface;
 
 class ImdbService
 {
@@ -17,9 +17,10 @@ class ImdbService
     private $serializer;
     private $apiKey;
 
-    public function __construct(Client $imdbClient, Serializer $serializer)
+    public function __construct(Client $imdbClient, SerializerInterface $serializer)
     {
-        $this->$imdbClient = $imdbClient;
+
+        $this->$imdbClient = $imdbClient; // $this->get('csa_guzzle.clients.imdb');
         $this->serializer = $serializer;
         $this->apiKey = '9ab4d92b';
     }
