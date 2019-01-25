@@ -36,7 +36,23 @@ class ImdbService
             'Year' => $data['Year'],
             'Runtime' => $data['Runtime'],
             'Genre' => $data['Genre'],
-            'Plot' => $data['Plot'],
+            'Plot' => $data['Plot']
+        ];
+    }
+    
+    public function searchFilmByTitle($title)
+    {
+        $uri = '/?apikey='.$this->apiKey.'&s='.$title;
+        $response = $this->imdbClient->get($uri);
+
+        $data = $this->serializer->deserialize($response->getBody()->getContents(), 'array', 'json');
+
+        return [
+            'Title' => $data['Title'],
+            'Year' => $data['Year'],
+            'Runtime' => $data['Runtime'],
+            'Genre' => $data['Genre'],
+            'Plot' => $data['Plot']
         ];
     }
 
