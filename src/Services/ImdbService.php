@@ -24,7 +24,7 @@ class ImdbService
         $this->apiKey = '9ab4d92b';
     }
 
-    public function searchFilmByTitle($title)
+    public function getFilmByTitle($title)
     {
         $uri = '/?apikey='.$this->apiKey.'&t='.$title;
         $response = $this->imdbClient->get($uri);
@@ -33,7 +33,41 @@ class ImdbService
 
         return [
             'Title' => $data['Title'],
-            'Year' => $data['Plot']
+            'Year' => $data['Year'],
+            'Runtime' => $data['Runtime'],
+            'Genre' => $data['Genre'],
+            'Plot' => $data['Plot']
+        ];
+    }
+
+    public function searchFilmByTitle($title)
+    {
+        $uri = '/?apikey='.$this->apiKey.'&s='.$title;
+        $response = $this->imdbClient->get($uri);
+
+        $data = $this->serializer->deserialize($response->getBody()->getContents(), 'array', 'json');
+
+        return [
+            'Title' => $data['Title'],
+            'Year' => $data['Year'],
+            'Runtime' => $data['Runtime'],
+            'Genre' => $data['Genre'],
+            'Plot' => $data['Plot']
+        ];
+    }
+    public function searchFilmByYear($title, $year)
+    {
+        $uri = '/?apikey='.$this->apiKey.'&s='.$title.'&y='.$year;
+        $response = $this->imdbClient->get($uri);
+
+        $data = $this->serializer->deserialize($response->getBody()->getContents(), 'array', 'json');
+
+        return [
+            'Title' => $data['Title'],
+            'Year' => $data['Year'],
+            'Runtime' => $data['Runtime'],
+            'Genre' => $data['Genre'],
+            'Plot' => $data['Plot']
         ];
     }
 
