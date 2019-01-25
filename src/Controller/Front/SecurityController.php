@@ -2,8 +2,11 @@
 
 namespace App\Controller\Front;
 
+use App\Entity\Listing;
 use App\Form\UserType;
 use App\Entity\User;
+use App\Services\TokenService;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -43,10 +46,11 @@ class SecurityController extends Controller
      * @Route("/register", name="registration")
      * @param Request $request
      * @param UserPasswordEncoderInterface $passwordEncoder
-     *
+     * @param \Swift_Mailer
+     * @throws \Exception
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer)
     {
         if ($this->getUser() instanceof User) {
             return $this->redirectToRoute('app_front_default_home');
@@ -60,12 +64,38 @@ class SecurityController extends Controller
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
             $user->setRoles(['ROLE_USER']);
+            $user->setIsActive(false);
+            //service getToken
+            $tokenService = new TokenService;
+            $user->setToken($tokenService->getToken());
+
+            //Les listes de base
+            $to_watch = new Listing();
+            $to_watch->setName('À voir');
+            $to_watch->setUser($user);
+            $watch = new Listing();
+            $watch->setName('Vu');
+            $watch->setUser($user);
+            $user->addListing($to_watch);
+            $user->addListing($watch);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('app_front_security_login');
+            $message = (new \Swift_Message('Confirmation Email'))
+                ->setFrom('send@example.com')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        'email/registration.html.twig',
+                        ['name' => $user->getUsername(),'token' => $user->getToken(), 'id' => $user->getId()]
+                    ),
+                    'text/html'
+                );
+            $mailer->send($message);
+
+            return $this->render('Front/Security/success.html.twig');
         }
 
         return $this->render(
@@ -74,4 +104,23 @@ class SecurityController extends Controller
             ]
         );
     }
+    /**
+     * @Route("/validate/{id}/{token}", name="validate_email")
+     * @param $id
+     * @param $token
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function validateEmail($id, $token)
+    {
+        $repository = $this->getDoctrine()->getRepository(User::class);
+        $user = $repository->find($id);
+        if ($token == $user->getToken()){
+            $user->setIsActive(true);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+        }
+        return $this->redirectToRoute('app_front_security_login');
+    }
+
 }

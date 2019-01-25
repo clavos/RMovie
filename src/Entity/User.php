@@ -44,7 +44,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Listing", mappedBy="user", cascade={"persist"})
      */
     private $listings;
 
@@ -54,15 +54,25 @@ class User implements UserInterface
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="user")
+     * @ORM\Column(type="boolean")
      */
-    private $scores;
+    private $isActive;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $token;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\User")
+     */
+    private $friends;
 
     public function __construct()
     {
         $this->listings = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->scores = new ArrayCollection();
+        $this->friends = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -216,32 +226,51 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Score[]
-     */
-    public function getScores(): Collection
+    public function getIsActive(): ?bool
     {
-        return $this->scores;
+        return $this->isActive;
     }
 
-    public function addScore(Score $score): self
+    public function setIsActive(bool $isActive): self
     {
-        if (!$this->scores->contains($score)) {
-            $this->scores[] = $score;
-            $score->setUser($this);
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getFriends(): Collection
+    {
+        return $this->friends;
+    }
+
+    public function addFriend(User $user): self
+    {
+        if (!$this->friends->contains($user)) {
+            $this->friends[] = $user;
         }
 
         return $this;
     }
 
-    public function removeScore(Score $score): self
+    public function removeUser(User $user): self
     {
-        if ($this->scores->contains($score)) {
-            $this->scores->removeElement($score);
-            // set the owning side to null (unless already changed)
-            if ($score->getUser() === $this) {
-                $score->setUser(null);
-            }
+        if ($this->friends->contains($user)) {
+            $this->friends->removeElement($user);
         }
 
         return $this;

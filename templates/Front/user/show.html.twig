@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>{{ user.username }}</h1>
+
+    {{ user.username }}
+
+    Ces listes
+
+    <a href="{{ path('user') }}">back to list</a>
+{% endblock %}

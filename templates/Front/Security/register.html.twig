@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
-{% form_theme form 'form/mon_theme.html.twig' %}
 
 {% block body %}
     {{ form_start(form) }}
-    {{ form_row(form.username) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.password.first) }}
-    {{ form_row(form.password.second) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.password.first) }}
+        {{ form_row(form.password.second) }}
 
-    <button type="submit">S'inscrire !</button>
+        <button type="submit">S'inscrire !</button>
+        {{ form_rest(form) }}
     {{ form_end(form) }}
 
 {% endblock %}

@@ -1,7 +1,220 @@
-{% extends "base.html.twig" %}
+<!DOCTYPE html>
+<html>
+<head lang="fr">
+    <meta charset="UTF-8">
 
-{% block title %}Administration{% endblock %}
+    <!--Page Title-->
+    <title>RMovie</title>
 
-{% block body %}
-    Front
-{% endblock %}
+    <!--Meta Keywords and Description-->
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+
+    {% block stylesheets %}
+        <!-- Main CSS Files -->
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <!-- Animate CSS-->
+        <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
+        <!-- Namari Color CSS -->
+        <link rel="stylesheet" href="{{ asset('css/namari-color.css') }}">
+        <!--Icon Fonts - Font Awesome Icons-->
+        <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
+    {% endblock %}
+
+    <!--Google Webfonts-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+
+</head>
+<body>
+<header id="banner" class="scrollto clearfix" data-enllax-ratio=".5">
+    <div id="header" class="nav-collapse">
+        <div class="row clearfix">
+            <div class="col-1">
+
+                <!--Logo-->
+                <div id="logo">
+
+                    <!--Logo that is shown on the banner-->
+                    <div id="banner-logo"><h1>RMovie</h1></div>
+                    <!--End of Banner Logo-->
+
+                    <!--The Logo that is shown on the sticky Navigation Bar-->
+                    <div id="navigation-logo"><h1>RMovie</h1></div>
+                    <!--End of Navigation Logo-->
+
+                </div>
+                <!--End of Logo-->
+
+
+                <!--Main Navigation-->
+                <nav id="nav-main">
+                    <ul>
+                        <li>
+                            <a href="#banner">Home</a>
+                        </li>
+                        <li>
+                            <a href="#services">Services</a>
+                        </li>
+                        <li>
+                            <a href="#testimonials">Testimonials</a>
+                        </li>
+                        {% if not user %}
+                            <li>
+                                <a href="{{ path('app_front_security_login') }}">Connection</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('app_front_security_registration') }}">Register</a>
+                            </li>
+                        {% endif %}
+                        {% if user %}
+                            <li>
+                                <a href="{{ path('movie_index') }}">Get in</a>
+                            </li>
+                            <li>
+                                <a href="{{ logout_url() }}">Logout</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                <!--End of Main Navigation-->
+
+                <div id="nav-trigger"><span></span></div>
+                <nav id="nav-mobile"></nav>
+
+            </div>
+        </div>
+    </div><!--End of Header-->
+
+    <!--Banner Content-->
+    <div id="banner-content" class="row clearfix">
+
+        <div class="col-38">
+
+            <div class="section-heading">
+                <h1>UNLEASHED THE POWER</h1>
+                <h2 class="background-heading"><b> Track the movies you watch and react to the moments that move you.</b></h2>
+            </div>
+
+        </div>
+
+    </div><!--End of Row-->
+</header>
+
+<!--Main Content Area-->
+<main id="content">
+
+    <!--Content Section-->
+    <div id="services" class="scrollto clearfix">
+
+        <div class="row no-padding-bottom clearfix">
+
+
+            <!--Content Left Side-->
+            <div class="col-3">
+                <!--User Testimonial-->
+                <blockquote class="testimonial text-right bigtest">
+                    <q>A funny app which is fun to go when I have some movies to track. Wich is a lot because of Netflix.</q>
+                    <footer>— Thomas Doe, Sorrowful Customer</footer>
+                </blockquote>
+                <!-- End of Testimonial-->
+
+            </div>
+            <!--End Content Left Side-->
+
+            <!--Content of the Right Side-->
+            <div class="col-3">
+                <div class="section-heading">
+                    <h3>TRACKING</h3>
+                    <h2 class="section-title">Sheathe your sword</h2>
+                    <p class="section-subtitle">Itching to pick up your phone and add the last movie you watched? There's no better way to do it than to simply create your account now and get started! </p>
+                </div>
+                <p>The movie and talent pages of RMovie are accessible to all internet users, but a registration process is necessary to contribute information to the site.
+                    Most data in the database is provided by volunteer contributors.
+                    The site enables registered users to submit new material and edits to existing entries.
+                    Users with a proven track record of submitting factual data are given instant approval for additions or corrections to cast, credits, and other demographics of media product and personalities.
+                    However, image, name, character name, plot summaries, and title changes are supposedly screened before publication, and usually take between 24 and 72 hours to appear.
+                </p>
+
+            </div>
+            <!--End Content Right Side-->
+
+            <div class="col-3">
+                <img src="{{ asset('images/homeCharacters.png') }}" alt="characters"/>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!--End of Content Section-->
+
+    <!--Testimonials-->
+    <aside id="testimonials" class="scrollto text-center" data-enllax-ratio=".2">
+
+        <div class="row clearfix">
+
+            <div class="section-heading">
+                <h3>FEEDBACK</h3>
+                <h2 class="section-title">What our watchers are saying</h2>
+            </div>
+
+            <!--User Testimonial-->
+            <blockquote class="col-3 testimonial classic">
+                <img src="{{ asset('images/user-images/user-1.jpg') }}" alt="User"/>
+                <q>The best app I have ever had in my life ! How could this even exist ?!</q>
+                <footer>John Doe - Happy Customer</footer>
+            </blockquote>
+            <!-- End of Testimonial-->
+
+            <!--User Testimonial-->
+            <blockquote class="col-3 testimonial classic">
+                <img src="{{ asset('images/user-images/user-2.jpg') }}" alt="User"/>
+                <q>It's really awesome tracking my watched movies with my friends ! I am waiting for the next update !</q>
+                <footer>Roslyn Doe - Happy Customer</footer>
+            </blockquote>
+            <!-- End of Testimonial-->
+
+            <!--User Testimonial-->
+            <blockquote class="col-3 testimonial classic">
+                <img src="{{ asset('images/user-images/user-3.jpg') }}" alt="User"/>
+                <q>A funny app which is fun to go when I have some movies to track. Wich is a lot because of Netflix.</q>
+                <footer>Thomas Doe - Happy Customer</footer>
+            </blockquote>
+            <!-- End of Testimonial-->
+
+        </div>
+
+    </aside>
+    <!--End of Testimonials-->
+
+</main>
+<!--End Main Content Area-->
+
+
+<!--Footer-->
+<footer id="landing-footer" class="clearfix">
+    <div class="row clearfix">
+
+    </div>
+</footer>
+<!--End of Footer-->
+
+<!-- Include JavaScript resources -->
+<script src="{{ asset('js/jquery.1.8.3.min.js') }}"></script>
+<script src="{{ asset('js/wow.min.js') }}"></script>
+<script src="{{ asset('js/featherlight.min.js') }}"></script>
+<script src="{{ asset('js/featherlight.gallery.min.js') }}"></script>
+<script src="{{ asset('js/jquery.enllax.min.js') }}"></script>
+<script src="{{ asset('js/jquery.scrollUp.min.js') }}"></script>
+<script src="{{ asset('js/jquery.easing.min.js') }}"></script>
+<script src="{{ asset('js/jquery.stickyNavbar.min.js') }}"></script>
+<script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
+<script src="{{ asset('js/images-loaded.min.js') }}"></script>
+<script src="{{ asset('js/lightbox.min.js') }}"></script>
+<script src="{{ asset('js/site.js') }}"></script>
+
+
+</body>
+</html>
