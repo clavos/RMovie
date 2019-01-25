@@ -19,7 +19,7 @@ class ImdbService
 
     public function __construct(Client $imdbClient, Serializer $serializer)
     {
-        $this->$imdbClient = $imdbClient;
+        $this->imdbClient = $imdbClient;
         $this->serializer = $serializer;
         $this->apiKey = '9ab4d92b';
     }
