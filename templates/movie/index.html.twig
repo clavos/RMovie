@@ -21,6 +21,7 @@
                 <td>{{ movie.name }}</td>
                 <td>{{ movie.description }}</td>
                 <td>
+                    <a class="" href="#">Ajouter à ma liste</a>
                     <a href="{{ path('movie_show', {'id': movie.id}) }}">Détails</a>
                     <a href="{{ path('movie_edit', {'id': movie.id}) }}">Modifier</a>
                 </td>

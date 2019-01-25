@@ -18,12 +18,6 @@ use App\Services\ImdbService;
  */
 class MovieController extends AbstractController
 {
-    // private $imdb; 
-
-    // public function __construct(ImdbService $imdb){
-    //     $this->imdb = $imdb;
-    // }
-
     /**
      * @Route("/", name="movie_index", methods="GET")
      */
@@ -58,14 +52,31 @@ class MovieController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="movie_show", methods="GET")
+     * @Route("/{id}", name="movie_show", methods="GET|POST")
      */
-    public function show(Movie $movie): Response
+    public function show(Movie $movie, Request $request): Response
     {
         $list_comments = $movie->getComments(); 
+
+        $comment = new Comment();
+        $form_comment = $this->createForm(CommentType::class, $comment);
+        $form_comment->handleRequest($request);
+
+        // print_r($request, 1);
+
+        if ($form_comment->isSubmitted() && $form_comment->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('movie_index');
+        }
+
         return $this->render('movie/show.html.twig', [
             'movie' => $movie, 
             'list_comments' => $list_comments,
+            'comment' => $comment,
+            'form_comment' => $form_comment->createView(),
         ]);
     }
 
@@ -107,7 +118,7 @@ class MovieController extends AbstractController
     /**
      * @Route("/add_comment", name="add_comment", methods={"GET","POST"})
      */
-    public function add_comment(Request $request, int $movie): Response
+    public function add_comment(Request $request): Response
     {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -118,13 +129,12 @@ class MovieController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            return $this->redirectToRoute('movie_show/$movie');
+            return $this->redirectToRoute('movie_index');
         }
 
-        $list_comments = $movie->getComments();
-        return $this->render('movie/show.html.twig', [
-            'movie' => $movie, 
-            'list_comments' => $list_comments,
+        return $this->render('comment/new.html.twig', [
+            'comment' => $comment,
+            'form' => $form->createView(),
         ]);
     }
 }
