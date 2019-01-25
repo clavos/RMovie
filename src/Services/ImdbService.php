@@ -39,10 +39,25 @@ class ImdbService
             'Plot' => $data['Plot']
         ];
     }
-    
+
     public function searchFilmByTitle($title)
     {
         $uri = '/?apikey='.$this->apiKey.'&s='.$title;
+        $response = $this->imdbClient->get($uri);
+
+        $data = $this->serializer->deserialize($response->getBody()->getContents(), 'array', 'json');
+
+        return [
+            'Title' => $data['Title'],
+            'Year' => $data['Year'],
+            'Runtime' => $data['Runtime'],
+            'Genre' => $data['Genre'],
+            'Plot' => $data['Plot']
+        ];
+    }
+    public function searchFilmByYear($title, $year)
+    {
+        $uri = '/?apikey='.$this->apiKey.'&s='.$title.'&y='.$year;
         $response = $this->imdbClient->get($uri);
 
         $data = $this->serializer->deserialize($response->getBody()->getContents(), 'array', 'json');
