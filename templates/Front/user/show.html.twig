@@ -3,21 +3,11 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <h1>{{ user.username }}</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Username</th>
-                <td>{{ user.username }}</td>
-            </tr>
-            <tr>
-                <th>Demande</th>
-                <td>{{ user.username }}</td>
-            </tr>
-        </tbody>
-    </table>
-    Ajouter ses listes et stats
+    {{ user.username }}
+
+    Ces listes
 
     <a href="{{ path('user') }}">back to list</a>
 {% endblock %}

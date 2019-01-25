@@ -54,11 +54,6 @@ class User implements UserInterface
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="user")
-     */
-    private $scores;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $isActive;
@@ -77,7 +72,6 @@ class User implements UserInterface
     {
         $this->listings = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->scores = new ArrayCollection();
         $this->friends = new ArrayCollection();
     }
 
@@ -226,37 +220,6 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($comment->getUser() === $this) {
                 $comment->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Score[]
-     */
-    public function getScores(): Collection
-    {
-        return $this->scores;
-    }
-
-    public function addScore(Score $score): self
-    {
-        if (!$this->scores->contains($score)) {
-            $this->scores[] = $score;
-            $score->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScore(Score $score): self
-    {
-        if ($this->scores->contains($score)) {
-            $this->scores->removeElement($score);
-            // set the owning side to null (unless already changed)
-            if ($score->getUser() === $this) {
-                $score->setUser(null);
             }
         }
 

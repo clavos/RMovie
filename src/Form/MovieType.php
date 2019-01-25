@@ -2,26 +2,25 @@
 
 namespace App\Form;
 
-use App\Entity\Score;
+use App\Entity\Movie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ScoreType extends AbstractType
+class MovieType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('grade')
-            ->add('user')
-            ->add('films')
+            ->add('name')
+            ->add('description')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Score::class,
+            'data_class' => Movie::class,
         ]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Controller\Front;
 use App\Entity\Listing;
 use App\Form\UserType;
 use App\Entity\User;
+use App\Services\TokenService;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,7 +65,9 @@ class SecurityController extends Controller
             $user->setPassword($password);
             $user->setRoles(['ROLE_USER']);
             $user->setIsActive(false);
-            $user->setToken(rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '='));
+            //service getToken
+            $tokenService = new TokenService;
+            $user->setToken($tokenService->getToken());
 
             //Les listes de base
             $to_watch = new Listing();

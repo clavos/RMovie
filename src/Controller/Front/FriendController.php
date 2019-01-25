@@ -25,7 +25,7 @@ class FriendController extends Controller
     public function index(): Response
     {
         $user = $this->getUser();
-        return $this->render('Front/friend/index.html.twig', ['friends' => $user->getFriends()]);
+        return $this->render('Front/Friend/index.html.twig', ['friends' => $user->getFriends()]);
     }
     /**
      * @Route("/{id}", name="ask_friend", methods="GET")
@@ -34,7 +34,7 @@ class FriendController extends Controller
     {
         $user = $this->getUser();
         $new_friend = $user->addFriend($friend);
-        return $this->render('Front/friend/index.html.twig', ['friends' => $user->getFriends()]);
+        return $this->render('Front/Friend/index.html.twig', ['friends' => $user->getFriends()]);
     }
 
 }

@@ -29,15 +29,19 @@ class Movie
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="films")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $scores;
+    private $name;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
 
     public function __construct()
     {
         $this->listings = new ArrayCollection();
         $this->comments = new ArrayCollection();
-        $this->scores = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -104,33 +108,26 @@ class Movie
         return $this;
     }
 
-    /**
-     * @return Collection|Score[]
-     */
-    public function getScores(): Collection
+    public function getName(): ?string
     {
-        return $this->scores;
+        return $this->name;
     }
 
-    public function addScore(Score $score): self
+    public function setName(?string $name): self
     {
-        if (!$this->scores->contains($score)) {
-            $this->scores[] = $score;
-            $score->setFilms($this);
-        }
+        $this->name = $name;
 
         return $this;
     }
 
-    public function removeScore(Score $score): self
+    public function getDescription(): ?string
     {
-        if ($this->scores->contains($score)) {
-            $this->scores->removeElement($score);
-            // set the owning side to null (unless already changed)
-            if ($score->getFilms() === $this) {
-                $score->setFilms(null);
-            }
-        }
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
